@@ -1,17 +1,17 @@
 {
-  "id": "template",
-  "name": "Plugin Template",
-  "description": "This is a template for Unifier plugins.",
+  "id": "af2025",
+  "name": "Unifier April Fools (2025)",
+  "description": "hehe",
   "version": "v1.0.0",
   "release": 0,
-  "minimum": 36,
+  "minimum": 144,
   "services": [],
   "bridge_platform": null,
   "requirements": [],
   "shutdown": false,
-  "modules": [
-    "template.py"
-  ],
-  "utils": [
+  "modules": [],
+  "utils": [],
+  "filters": [
+    "aprilfools.py"
   ]
 }
