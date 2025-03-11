@@ -1,6 +1,6 @@
 """
-<one line to give the program's name and a brief idea of what it does.>
-Copyright (C) <year>  <name of author>
+Unifier AF2025 - a filter for April Fools
+Copyright (C) 2025  UnifierHQ
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU Affero General Public License as published
@@ -16,18 +16,40 @@ You should have received a copy of the GNU Affero General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 """
 
-import nextcord # use import nextcord for v1.2
-from nextcord.ext import commands
+from random import randint
+from datetime import datetime
+from utils.base_filter import FilterResult, BaseFilter
 
-class Template(commands.Cog):
-    """A template cog written for unifier-plugin temmplate repo"""
-    
-    def __init__(self,bot):
-        self.bot = bot
+class Filter(BaseFilter):
+    def __init__(self):
+        super().__init__(
+            'bobolx',
+            'bobolx chat',
+            'the 10000% best unifier filter in the world (source: trust me bro)'
+        )
 
-    @commands.command()
-    async def template(self,ctx):
-        await ctx.send('This is a template plugin!')
+    def check(self, message, data) -> FilterResult:
+        # Each word has a 5% chance of being tagged
 
-def setup(bot):
-    bot.add_cog(Template(bot))
+        words = []
+        for word in message['content'].split(' '):
+            num = randint(1,20)
+            if num == 1 and any(c.isalpha() for c in word):
+                words.append('\\'+('#'*len(word))) # add backslash here to escape formatting
+            else:
+                words.append(word)
+
+        message = ' '.join(words)
+
+        # The entire message has a 2% chance of being censored
+        ban_message = (
+            '## Banned for 3 days\n' +
+            '-# (not really)\n'+
+            'Our content monitors have determined that your behaviour at Unifier has been in violation of our terms of service.\n'+
+            'Received: ' + datetime.now().strftime("%m/%d/%Y %I:%M:%S %p") + '\n' +
+            'Moderator note: merry april fools'
+        )
+        
+        return FilterResult(
+            randint(1,50) > 1, None, message=ban_message, should_log=True, safe_message=message
+        )
