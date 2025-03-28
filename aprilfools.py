@@ -51,5 +51,5 @@ class Filter(BaseFilter):
         )
         
         return FilterResult(
-            False, None, message=ban_message, should_log=True, safe_message=message if randint(1,50) > 1 else None
+            False, None, message=ban_message, should_log=True, safe_content=message if randint(1,50) > 1 else None
         )
